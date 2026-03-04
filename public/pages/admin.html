@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel — Good Cookie Chocolate Store</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>" />
+</head>
+
+<body class="admin-body">
+    <div class="loader-overlay">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Admin Panel Loading...</div>
+    </div>
+
+    <!-- Admin Layout -->
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="admin-sidebar">
+            <div class="admin-logo">
+                <span>🍪</span>
+                <div>
+                    <div class="admin-logo-title">Good Cookie</div>
+                    <div class="admin-logo-sub">Admin Panel</div>
+                </div>
+            </div>
+            <nav class="admin-nav">
+                <div class="admin-nav-section">MAIN</div>
+                <a href="#" class="admin-nav-link active" data-tab="dashboard"
+                    onclick="switchAdminTab('dashboard',this)">
+                    <span class="anl-icon">📊</span> Dashboard
+                </a>
+                <a href="#" class="admin-nav-link" data-tab="orders" onclick="switchAdminTab('orders',this)">
+                    <span class="anl-icon">📦</span> Orders
+                    <span class="nav-badge" id="pending-badge">...</span>
+                </a>
+                <div class="admin-nav-section">CATALOGUE</div>
+                <a href="#" class="admin-nav-link" data-tab="products" onclick="switchAdminTab('products',this)">
+                    <span class="anl-icon">🛍</span> Products
+                </a>
+                <div class="admin-nav-section">CUSTOMERS</div>
+                <a href="#" class="admin-nav-link" data-tab="messages" onclick="switchAdminTab('messages',this)">
+                    <span class="anl-icon">💬</span> Messages
+                    <span class="nav-badge" id="msg-badge">...</span>
+                </a>
+                <div class="admin-nav-section">ACCOUNT</div>
+                <a href="/" class="admin-nav-link"><span class="anl-icon">🌐</span> View Site</a>
+                <a href="#" class="admin-nav-link logout-link" onclick="Auth.logout()"><span class="anl-icon">🚪</span>
+                    Logout</a>
+            </nav>
+            <div class="admin-sidebar-footer">
+                <div class="admin-user-info">
+                    <div class="admin-avatar">AA</div>
+                    <div>
+                        <div class="admin-user-name" id="admin-name">Admin</div>
+                        <div class="admin-user-email" id="admin-email">arpita@admin.com</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <div class="admin-main">
+
+            <!-- Top Bar -->
+            <div class="admin-topbar">
+                <div class="admin-topbar-left">
+                    <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+                    <h1 class="admin-page-title" id="admin-page-title">Dashboard</h1>
+                </div>
+                <div class="admin-topbar-right">
+                    <div class="live-indicator"><span class="live-dot"></span> Live</div>
+                    <div class="admin-time" id="admin-time"></div>
+                </div>
+            </div>
+
+            <!-- ── Dashboard Tab ── -->
+            <div class="admin-tab" id="tab-dashboard">
+                <div class="analytics-cards" id="analytics-cards">
+                    <div class="analytics-card ac-orders">
+                        <div class="ac-icon">📦</div>
+                        <div class="ac-data">
+                            <div class="ac-num" id="ac-orders">—</div>
+                            <div class="ac-label">Total Orders</div>
+                        </div>
+                        <div class="ac-trend">↑</div>
+                    </div>
+                    <div class="analytics-card ac-revenue">
+                        <div class="ac-icon">💰</div>
+                        <div class="ac-data">
+                            <div class="ac-num" id="ac-revenue">—</div>
+                            <div class="ac-label">Total Revenue</div>
+                        </div>
+                        <div class="ac-trend">↑</div>
+                    </div>
+                    <div class="analytics-card ac-users">
+                        <div class="ac-icon">👥</div>
+                        <div class="ac-data">
+                            <div class="ac-num" id="ac-users">—</div>
+                            <div class="ac-label">Active Users</div>
+                        </div>
+                        <div class="ac-trend">↑</div>
+                    </div>
+                    <div class="analytics-card ac-products">
+                        <div class="ac-icon">🛍</div>
+                        <div class="ac-data">
+                            <div class="ac-num" id="ac-products">—</div>
+                            <div class="ac-label">Products</div>
+                        </div>
+                        <div class="ac-trend">→</div>
+                    </div>
+                    <div class="analytics-card ac-pending">
+                        <div class="ac-icon">⏳</div>
+                        <div class="ac-data">
+                            <div class="ac-num" id="ac-pending">—</div>
+                            <div class="ac-label">Pending Orders</div>
+                        </div>
+                        <div class="ac-trend">!</div>
+                    </div>
+                    <div class="analytics-card ac-msgs">
+                        <div class="ac-icon">💬</div>
+                        <div class="ac-data">
+                            <div class="ac-num" id="ac-msgs">—</div>
+                            <div class="ac-label">Unread Messages</div>
+                        </div>
+                        <div class="ac-trend">!</div>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <div class="admin-section-header">
+                        <h2>Recent Orders</h2>
+                        <button class="btn btn-secondary btn-sm" onclick="switchAdminTab('orders')">View All</button>
+                    </div>
+                    <div id="recent-orders-table"></div>
+                </div>
+            </div>
+
+            <!-- ── Orders Tab ── -->
+            <div class="admin-tab hidden" id="tab-orders">
+                <div class="admin-section">
+                    <div class="admin-section-header">
+                        <h2>All Orders</h2>
+                        <button class="btn btn-primary btn-sm" onclick="loadAdminOrders()">🔄 Refresh</button>
+                    </div>
+                    <div id="admin-orders-table"></div>
+                </div>
+            </div>
+
+            <!-- ── Products Tab ── -->
+            <div class="admin-tab hidden" id="tab-products">
+                <div class="admin-section">
+                    <div class="admin-section-header">
+                        <h2>Products</h2>
+                        <button class="btn btn-primary btn-sm" onclick="openProductModal()">+ Add Product</button>
+                    </div>
+                    <div id="admin-products-table"></div>
+                </div>
+            </div>
+
+            <!-- ── Messages Tab ── -->
+            <div class="admin-tab hidden" id="tab-messages">
+                <div class="admin-section">
+                    <div class="admin-section-header">
+                        <h2>Customer Messages</h2>
+                        <button class="btn btn-primary btn-sm" onclick="loadMessages()">🔄 Refresh</button>
+                    </div>
+                    <div id="messages-list"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="modal-overlay" id="product-modal" style="display:none">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-title">Add Product</h3>
+                <button class="modal-close" onclick="closeProductModal()">✕</button>
+            </div>
+            <form id="product-form">
+                <input type="hidden" id="product-id" />
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Product Name</label>
+                        <input type="text" class="form-control" id="p-name" required
+                            placeholder="Dark Chocolate Truffle" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-control" id="p-category" required>
+                            <option value="chocolates">🍫 Chocolates</option>
+                            <option value="cookies">🍪 Cookies</option>
+                            <option value="combos">🎁 Combos</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Price (₹)</label>
+                        <input type="number" class="form-control" id="p-price" required min="1" placeholder="299" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Original Price (₹)</label>
+                        <input type="number" class="form-control" id="p-original-price" min="1" placeholder="399" />
+                    </div>
+                </div>
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label class="form-label">Rating (0-5)</label>
+                        <input type="number" class="form-control" id="p-rating" min="0" max="5" step="0.1"
+                            placeholder="4.8" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Badge</label>
+                        <input type="text" class="form-control" id="p-badge" placeholder="Bestseller, New, etc." />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" id="p-description" rows="2"
+                        placeholder="Product description..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Image URL</label>
+                    <input type="text" class="form-control" id="p-image" placeholder="/images/chocolate.png" />
+                </div>
+                <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:8px">
+                    <button type="button" class="btn btn-secondary" onclick="closeProductModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="product-submit-btn">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+    <script src="/js/app.js"></script>
+    <script src="/js/admin.js"></script>
+</body>
+
+</html>

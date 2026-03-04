@@ -1,0 +1,29 @@
+{
+  "name": "good-cookie-chocolate-store",
+  "version": "1.0.0",
+  "description": "Good Cookie Chocolate Store — Premium eCommerce Web Application for Chocolates & Cookies",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "start:user": "node server.js",
+    "start:admin": "node admin-server.js",
+    "start:all": "node server.js & node admin-server.js"
+  },
+  "keywords": [
+    "chocolates",
+    "cookies",
+    "ecommerce",
+    "nodejs",
+    "express"
+  ],
+  "author": "Arpita Survase",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "multer": "^2.1.0",
+    "uuid": "^13.0.0"
+  }
+}

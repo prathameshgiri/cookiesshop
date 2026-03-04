@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout — Good Cookie Chocolate Store</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/cart.css" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍪</text></svg>" />
+    <style>
+        .checkout-page {
+            padding: 100px 0 60px;
+            min-height: 80vh;
+        }
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 32px;
+            align-items: start;
+        }
+
+        .checkout-form-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .checkout-form-card h2 {
+            margin-bottom: 24px;
+            font-size: 1.3rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .order-review {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 28px;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 90px;
+        }
+
+        .order-review h3 {
+            margin-bottom: 20px;
+        }
+
+        .review-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .review-item:last-of-type {
+            border-bottom: none;
+        }
+
+        .review-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .review-item-info {
+            flex: 1;
+        }
+
+        .review-item-name {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .review-item-sub {
+            font-size: 0.78rem;
+            color: var(--text-light);
+        }
+
+        .review-item-price {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--primary);
+        }
+
+        .success-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-overlay.show {
+            display: flex;
+        }
+
+        .success-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 48px;
+            text-align: center;
+            max-width: 440px;
+            box-shadow: var(--shadow-lg);
+            animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.7)
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1)
+            }
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+
+        .success-card h2 {
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .success-card p {
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+
+        @media(max-width:768px) {
+            .checkout-layout {
+                grid-template-columns: 1fr
+            }
+
+            .form-row {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loader-overlay">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Good Cookie 🍪</div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo"><span class="logo-icon">🍪</span><span>Good Cookie</span></a>
+            <div class="nav-actions">
+                <div id="nav-user-menu" style="display:none;align-items:center;gap:8px;">
+                    <a href="/dashboard" class="nav-user-btn">👤 <span id="nav-username">User</span></a>
+                    <button class="btn btn-secondary btn-sm" onclick="Auth.logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="checkout-page">
+        <div class="container">
+            <div class="cart-header">
+                <h1>📦 Checkout</h1>
+                <p>Fill in your delivery details to complete your order</p>
+            </div>
+
+            <div class="checkout-layout">
+                <!-- Form -->
+                <div>
+                    <div class="checkout-form-card">
+                        <h2>🚚 Delivery Information</h2>
+                        <form id="checkout-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="first-name" placeholder="Arpita"
+                                        required />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="last-name" placeholder="Survase"
+                                        required />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="co-email" placeholder="arpita@user.com"
+                                    required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" placeholder="+91 98765 43210"
+                                    required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Delivery Address</label>
+                                <textarea class="form-control" id="address"
+                                    placeholder="Enter your complete delivery address..." rows="3" required></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">City</label>
+                                    <input type="text" class="form-control" id="city" placeholder="Mumbai" required />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">PIN Code</label>
+                                    <input type="text" class="form-control" id="pincode" placeholder="400001"
+                                        required />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="checkout-form-card" style="margin-top:20px">
+                        <h2>💳 Payment Method</h2>
+                        <div style="display:flex;flex-direction:column;gap:12px;">
+                            <label
+                                style="display:flex;align-items:center;gap:12px;padding:14px;border:2px solid var(--primary);border-radius:var(--radius-sm);cursor:pointer;background:rgba(107,61,46,0.04)">
+                                <input type="radio" name="payment" value="cod" checked
+                                    style="accent-color:var(--primary)" />
+                                <span>💵 Cash on Delivery</span>
+                            </label>
+                            <label
+                                style="display:flex;align-items:center;gap:12px;padding:14px;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer">
+                                <input type="radio" name="payment" value="upi" style="accent-color:var(--primary)" />
+                                <span>📱 UPI Payment (Demo)</span>
+                            </label>
+                            <label
+                                style="display:flex;align-items:center;gap:12px;padding:14px;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer">
+                                <input type="radio" name="payment" value="card" style="accent-color:var(--primary)" />
+                                <span>💳 Credit / Debit Card (Demo)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-lg" id="place-order-btn" onclick="placeOrder()"
+                        style="width:100%;justify-content:center;margin-top:20px">
+                        Place Order 🍪
+                    </button>
+                </div>
+
+                <!-- Order Review -->
+                <div class="order-review">
+                    <h3>Order Summary</h3>
+                    <div id="review-items"></div>
+                    <div class="summary-row" style="margin-top:12px"><span>Subtotal</span><span
+                            id="review-subtotal">₹0</span></div>
+                    <div class="summary-row"><span>Delivery</span><span class="free-del">FREE</span></div>
+                    <div class="summary-row total-row"><span>Total</span><span id="review-total">₹0</span></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="success-overlay" id="success-overlay">
+        <div class="success-card">
+            <div class="success-icon">🎉</div>
+            <h2>Order Placed!</h2>
+            <p>Your order has been placed successfully. We'll start preparing your treats right away!</p>
+            <div style="display:flex;gap:12px;justify-content:center">
+                <a href="/dashboard" class="btn btn-primary">View Order</a>
+                <a href="/" class="btn btn-secondary">Shop More</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+    <script src="/js/app.js"></script>
+    <script>
+        // Require auth
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!Auth.requireUser()) return;
+            // Pre-fill user info
+            const email = Auth.getEmail();
+            if (email) document.getElementById('co-email').value = email;
+
+            // Render cart review
+            const items = Cart.get();
+            if (!items.length) { window.location.href = '/cart'; return; }
+
+            const reviewEl = document.getElementById('review-items');
+            reviewEl.innerHTML = items.map(i => `
+      <div class="review-item">
+        <img src="${i.image}" alt="${i.name}" onerror="this.src='/images/hero.png'" />
+        <div class="review-item-info">
+          <div class="review-item-name">${i.name}</div>
+          <div class="review-item-sub">Qty: ${i.quantity}</div>
+        </div>
+        <div class="review-item-price">${formatCurrency(i.price * i.quantity)}</div>
+      </div>
+    `).join('');
+
+            const total = Cart.total();
+            document.getElementById('review-subtotal').textContent = formatCurrency(total);
+            document.getElementById('review-total').textContent = formatCurrency(total);
+        });
+
+        async function placeOrder() {
+            const btn = document.getElementById('place-order-btn');
+            const fname = document.getElementById('first-name').value.trim();
+            const lname = document.getElementById('last-name').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const pin = document.getElementById('pincode').value.trim();
+
+            if (!fname || !lname || !address || !city || !pin) {
+                showToast('Please fill in all delivery details!', 'error');
+                return;
+            }
+
+            btn.disabled = true; btn.textContent = 'Placing Order...';
+            try {
+                await API.post('/orders', {
+                    items: Cart.get(),
+                    total: Cart.total(),
+                    address: `${address}, ${city} - ${pin}`
+                });
+                Cart.clear();
+                document.getElementById('success-overlay').classList.add('show');
+            } catch (e) {
+                showToast('Failed to place order: ' + e.message, 'error');
+                btn.disabled = false; btn.textContent = 'Place Order 🍪';
+            }
+        }
+    </script>
+</body>
+
+</html>

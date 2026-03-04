@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login — Good Cookie Chocolate Store</title>
+    <meta name="description" content="Login to your Good Cookie account to manage orders and enjoy exclusive deals." />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/auth.css" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍪</text></svg>" />
+</head>
+
+<body class="auth-body">
+
+    <div class="auth-layout">
+
+        <!-- Left Panel -->
+        <div class="auth-panel">
+            <div class="auth-panel-bg">
+                <div class="auth-blob a-b1"></div>
+                <div class="auth-blob a-b2"></div>
+            </div>
+            <div class="auth-panel-content">
+                <a href="/" class="auth-logo">
+                    <span>🍪</span> Good Cookie
+                </a>
+                <h2>Welcome back!</h2>
+                <p>Login to track your orders, reorder your favourites, and enjoy exclusive member deals.</p>
+                <div class="auth-panel-features">
+                    <div class="apf">🛒 Track your orders in real-time</div>
+                    <div class="apf">🎁 Exclusive member discounts</div>
+                    <div class="apf">📦 Easy reordering</div>
+                    <div class="apf">💬 Priority support</div>
+                </div>
+                <div class="auth-demo-creds glass">
+                    <div class="demo-label">🔑 Demo Credentials</div>
+                    <div class="demo-row"><span>Email:</span><strong>arpita@user.com</strong></div>
+                    <div class="demo-row"><span>Password:</span><strong>1234</strong></div>
+                    <button class="btn btn-gold btn-sm" onclick="fillDemo()">Auto Fill</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Form -->
+        <div class="auth-form-side">
+            <div class="auth-form-card">
+                <div class="auth-form-header">
+                    <h1>Sign In</h1>
+                    <p>Enter your credentials to access your account</p>
+                </div>
+
+                <div id="auth-error" class="auth-error" style="display:none"></div>
+
+                <form id="login-form">
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">📧</span>
+                            <input type="email" class="form-control" id="email" placeholder="arpita@user.com"
+                                autocomplete="email" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" class="form-control" id="password" placeholder="••••••••"
+                                autocomplete="current-password" required />
+                            <button type="button" class="pass-toggle" id="pass-toggle"
+                                onclick="togglePass()">👁</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary auth-submit-btn" id="submit-btn">
+                        Sign In →
+                    </button>
+                </form>
+
+                <div class="auth-footer-links">
+                    <a href="/">← Back to Shop</a>
+                    <a href="/admin-login">Admin Login</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="toast-container"></div>
+    <script src="/js/app.js"></script>
+    <script>
+        // Redirect if already logged in
+        if (Auth.isLoggedIn()) {
+            window.location.href = Auth.isAdmin() ? '/admin' : '/dashboard';
+        }
+
+        function fillDemo() {
+            document.getElementById('email').value = 'arpita@user.com';
+            document.getElementById('password').value = '1234';
+        }
+
+        function togglePass() {
+            const input = document.getElementById('password');
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            const errEl = document.getElementById('auth-error');
+            btn.disabled = true; btn.textContent = 'Signing in...';
+            errEl.style.display = 'none';
+            try {
+                const data = await API.post('/auth/login', {
+                    email: document.getElementById('email').value.trim(),
+                    password: document.getElementById('password').value
+                });
+                Auth.save(data);
+                showToast('Welcome back, ' + data.name.split(' ')[0] + '! 🍪', 'success');
+                setTimeout(() => {
+                    window.location.href = data.role === 'admin' ? '/admin' : '/dashboard';
+                }, 800);
+            } catch (err) {
+                errEl.textContent = '❌ ' + err.message;
+                errEl.style.display = 'block';
+                btn.disabled = false; btn.textContent = 'Sign In →';
+            }
+        });
+    </script>
+</body>
+
+</html>

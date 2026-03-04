@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Dashboard — Good Cookie</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍪</text></svg>" />
+</head>
+
+<body>
+    <div class="loader-overlay">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Loading Dashboard...</div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo"><span class="logo-icon">🍪</span><span>Good Cookie</span></a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/#products">Products</a></li>
+                <li><a href="/cart">🛒 Cart</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="nav-cart-btn" onclick="window.location.href='/cart'">
+                    🛒 <span class="cart-badge" style="display:none">0</span>
+                </button>
+                <div id="nav-user-menu" style="display:flex;align-items:center;gap:8px;">
+                    <span class="nav-user-btn">👤 <span id="nav-username">User</span></span>
+                    <button class="btn btn-secondary btn-sm" onclick="Auth.logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="dashboard-page">
+        <div class="dashboard-wrapper">
+
+            <!-- Sidebar -->
+            <aside class="dashboard-sidebar">
+                <div class="sidebar-user">
+                    <div class="sidebar-avatar" id="sidebar-avatar">AS</div>
+                    <div class="sidebar-name" id="sidebar-name">Arpita Survase</div>
+                    <div class="sidebar-email" id="sidebar-email">arpita@user.com</div>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="#" class="sidebar-link active" data-tab="orders" onclick="switchTab('orders',this)">
+                        <span>📦</span> My Orders
+                    </a>
+                    <a href="#" class="sidebar-link" data-tab="profile" onclick="switchTab('profile',this)">
+                        <span>👤</span> My Profile
+                    </a>
+                    <a href="/cart" class="sidebar-link">
+                        <span>🛒</span> My Cart
+                    </a>
+                    <a href="/#products" class="sidebar-link">
+                        <span>🍪</span> Shop More
+                    </a>
+                    <a href="#" class="sidebar-link logout-link" onclick="Auth.logout()">
+                        <span>🚪</span> Logout
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="dashboard-main">
+
+                <!-- Stats Row -->
+                <div class="dash-stats" id="dash-stats">
+                    <div class="dash-stat-card">
+                        <div class="ds-icon">📦</div>
+                        <div>
+                            <div class="ds-num" id="stat-total">0</div>
+                            <div class="ds-label">Total Orders</div>
+                        </div>
+                    </div>
+                    <div class="dash-stat-card">
+                        <div class="ds-icon">⏳</div>
+                        <div>
+                            <div class="ds-num" id="stat-pending">0</div>
+                            <div class="ds-label">Pending</div>
+                        </div>
+                    </div>
+                    <div class="dash-stat-card">
+                        <div class="ds-icon">✅</div>
+                        <div>
+                            <div class="ds-num" id="stat-delivered">0</div>
+                            <div class="ds-label">Delivered</div>
+                        </div>
+                    </div>
+                    <div class="dash-stat-card">
+                        <div class="ds-icon">💰</div>
+                        <div>
+                            <div class="ds-num" id="stat-spent">₹0</div>
+                            <div class="ds-label">Total Spent</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders Tab -->
+                <div class="tab-content" id="tab-orders">
+                    <div class="dash-section-header">
+                        <h2>My Orders</h2>
+                        <button class="btn btn-primary btn-sm" onclick="loadOrders()">🔄 Refresh</button>
+                    </div>
+                    <div id="orders-container">
+                        <div class="dash-loading">Loading your orders...</div>
+                    </div>
+                </div>
+
+                <!-- Profile Tab -->
+                <div class="tab-content hidden" id="tab-profile">
+                    <div class="dash-section-header">
+                        <h2>My Profile</h2>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profile-avatar-big" id="profile-avatar-big">AS</div>
+                        <div class="profile-form">
+                            <div class="form-row-2">
+                                <div class="form-group">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="pf-name" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="pf-email" readonly
+                                        style="background:var(--cream)" />
+                                </div>
+                            </div>
+                            <div class="form-row-2">
+                                <div class="form-group">
+                                    <label class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" id="pf-phone"
+                                        placeholder="+91 98765 43210" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">City</label>
+                                    <input type="text" class="form-control" id="pf-city" placeholder="Mumbai" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" id="pf-address"
+                                    placeholder="Your delivery address"></textarea>
+                            </div>
+                            <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer" style="margin-top:auto">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© 2026 Arpita Survase. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast-container"></div>
+    <script src="/js/app.js"></script>
+    <script src="/js/dashboard.js"></script>
+</body>
+
+</html>

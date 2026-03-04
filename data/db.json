@@ -1,0 +1,166 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "name": "Arpita Survase",
+      "email": "arpita@user.com",
+      "password": "1234",
+      "role": "user",
+      "phone": "+91 98765 43210",
+      "address": "Mumbai, Maharashtra",
+      "joinedAt": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "a1",
+      "name": "Arpita Admin",
+      "email": "arpita@admin.com",
+      "password": "1234",
+      "role": "admin",
+      "joinedAt": "2026-01-01T00:00:00Z"
+    }
+  ],
+  "products": [
+    {
+      "id": "p1",
+      "name": "Dark Chocolate Truffle",
+      "category": "chocolates",
+      "price": 299,
+      "originalPrice": 399,
+      "rating": 4.8,
+      "reviews": 128,
+      "image": "/images/chocolate.png",
+      "description": "Handcrafted dark chocolate truffles with 72% cacao, rich and velvety texture.",
+      "badge": "Bestseller",
+      "stock": 50,
+      "createdAt": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "p2",
+      "name": "Classic Choco Chip Cookies",
+      "category": "cookies",
+      "price": 199,
+      "originalPrice": 249,
+      "rating": 4.9,
+      "reviews": 256,
+      "image": "/images/cookies.png",
+      "description": "Freshly baked cookies loaded with premium chocolate chips. Crispy outside, chewy inside.",
+      "badge": "Fan Favorite",
+      "stock": 80,
+      "createdAt": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "p3",
+      "name": "Premium Gift Combo Box",
+      "category": "combos",
+      "price": 599,
+      "originalPrice": 799,
+      "rating": 4.7,
+      "reviews": 94,
+      "image": "/images/combo.png",
+      "description": "A luxurious gift box featuring our finest chocolates and signature cookies.",
+      "badge": "Gift Special",
+      "stock": 30,
+      "createdAt": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "p4",
+      "name": "Milk Chocolate Bars",
+      "category": "chocolates",
+      "price": 149,
+      "originalPrice": 199,
+      "rating": 4.6,
+      "reviews": 87,
+      "image": "/images/chocolate.png",
+      "description": "Smooth and creamy milk chocolate bars made with finest Belgian cocoa.",
+      "badge": "New",
+      "stock": 60,
+      "createdAt": "2026-01-10T00:00:00Z"
+    },
+    {
+      "id": "p5",
+      "name": "Oatmeal Raisin Cookies",
+      "category": "cookies",
+      "price": 179,
+      "originalPrice": 229,
+      "rating": 4.5,
+      "reviews": 65,
+      "image": "/images/cookies.png",
+      "description": "Wholesome oatmeal cookies packed with plump raisins and a hint of cinnamon.",
+      "badge": "",
+      "stock": 45,
+      "createdAt": "2026-01-15T00:00:00Z"
+    },
+    {
+      "id": "p6",
+      "name": "Cookie & Choco Hamper",
+      "category": "combos",
+      "price": 449,
+      "originalPrice": 599,
+      "rating": 4.8,
+      "reviews": 112,
+      "image": "/images/combo.png",
+      "description": "A delightful hamper combining assorted cookies and artisan chocolates.",
+      "badge": "Popular",
+      "stock": 25,
+      "createdAt": "2026-01-20T00:00:00Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord1",
+      "userId": "u1",
+      "userName": "Arpita Survase",
+      "userEmail": "arpita@user.com",
+      "items": [
+        {
+          "productId": "p1",
+          "name": "Dark Chocolate Truffle",
+          "price": 299,
+          "quantity": 2,
+          "image": "/images/chocolate.png"
+        }
+      ],
+      "total": 598,
+      "status": "Delivered",
+      "address": "Mumbai, Maharashtra",
+      "createdAt": "2026-02-01T10:00:00Z"
+    },
+    {
+      "id": "ord578da09b",
+      "userId": "u1",
+      "userName": "Arpita Survase",
+      "userEmail": "arpita@user.com",
+      "items": [
+        {
+          "productId": "p2",
+          "name": "Classic Choco Chip Cookies",
+          "price": 199,
+          "image": "/images/cookies.png",
+          "quantity": 1
+        }
+      ],
+      "total": 199,
+      "address": "s, s - 2345654321",
+      "status": "Confirmed",
+      "createdAt": "2026-03-04T14:31:56.040Z"
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg1",
+      "name": "Rahul Sharma",
+      "email": "rahul@example.com",
+      "message": "Do you deliver outside Mumbai? Love your chocolates!",
+      "createdAt": "2026-02-10T08:30:00Z",
+      "read": true
+    },
+    {
+      "id": "msgc10e0454",
+      "name": "prathamesh giri",
+      "email": "contact@prathameshgiri.in",
+      "message": "test",
+      "read": true,
+      "createdAt": "2026-03-04T14:33:32.355Z"
+    }
+  ]
+}
