@@ -79,7 +79,7 @@
 
                 <div class="auth-footer-links">
                     <a href="/">← Back to Shop</a>
-                    <a href="/admin-login">Admin Login</a>
+                    <a href="http://localhost:3001/admin-login">Admin Login</a>
                 </div>
             </div>
         </div>
@@ -91,7 +91,7 @@
     <script>
         // Redirect if already logged in
         if (Auth.isLoggedIn()) {
-            window.location.href = Auth.isAdmin() ? '/admin' : '/dashboard';
+            window.location.href = Auth.isAdmin() ? 'http://localhost:3001/admin' : '/dashboard';
         }
 
         function fillDemo() {
@@ -118,7 +118,7 @@
                 Auth.save(data);
                 showToast('Welcome back, ' + data.name.split(' ')[0] + '! 🍪', 'success');
                 setTimeout(() => {
-                    window.location.href = data.role === 'admin' ? '/admin' : '/dashboard';
+                    window.location.href = data.role === 'admin' ? 'http://localhost:3001/admin' : '/dashboard';
                 }, 800);
             } catch (err) {
                 errEl.textContent = '❌ ' + err.message;

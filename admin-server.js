@@ -40,10 +40,5 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`\n🛡️  Good Cookie Admin Panel running!`);
-    console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
-    console.log(`🌐 Admin URL: http://localhost:${PORT}/admin`);
-    console.log(`🔒 Login:     http://localhost:${PORT}/admin-login`);
-    console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
-    console.log(`🛠  Admin: arpita@admin.com / 1234\n`);
+    // No output here to avoid duplicate logging with server.js
 });

@@ -72,7 +72,7 @@ app.listen(PORT, () => {
     console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
     console.log(`🌐 Website:    http://localhost:${PORT}`);
     console.log(`🔑 User Login: http://localhost:${PORT}/login`);
-    console.log(`🔒 Admin:      http://localhost:${PORT}/admin-login`);
+    console.log(`🔒 Admin:      http://localhost:3001/admin-login`);
     console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
     console.log(`👤 User:  arpita@user.com  / 1234`);
     console.log(`🛠  Admin: arpita@admin.com / 1234`);

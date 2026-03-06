@@ -19,8 +19,12 @@ const API = {
 
     async get(url) {
         const res = await fetch(this.base + url, { headers: this.headers() });
-        if (!res.ok) throw new Error((await res.json()).error || 'Request failed');
-        return res.json();
+        const data = await res.json();
+        if (!res.ok) {
+            if (res.status === 401) { Auth.clear(); window.location.href = '/login'; }
+            throw new Error(data.error || 'Request failed');
+        }
+        return data;
     },
 
     async post(url, body) {
@@ -29,8 +33,12 @@ const API = {
             headers: this.headers(),
             body: JSON.stringify(body)
         });
-        if (!res.ok) throw new Error((await res.json()).error || 'Request failed');
-        return res.json();
+        const data = await res.json();
+        if (!res.ok) {
+            if (res.status === 401) { Auth.clear(); window.location.href = '/login'; }
+            throw new Error(data.error || 'Request failed');
+        }
+        return data;
     },
 
     async put(url, body) {
@@ -39,8 +47,12 @@ const API = {
             headers: this.headers(),
             body: JSON.stringify(body)
         });
-        if (!res.ok) throw new Error((await res.json()).error || 'Request failed');
-        return res.json();
+        const data = await res.json();
+        if (!res.ok) {
+            if (res.status === 401) { Auth.clear(); window.location.href = '/login'; }
+            throw new Error(data.error || 'Request failed');
+        }
+        return data;
     },
 
     async delete(url) {
@@ -48,8 +60,12 @@ const API = {
             method: 'DELETE',
             headers: this.headers()
         });
-        if (!res.ok) throw new Error((await res.json()).error || 'Request failed');
-        return res.json();
+        const data = await res.json();
+        if (!res.ok) {
+            if (res.status === 401) { Auth.clear(); window.location.href = '/login'; }
+            throw new Error(data.error || 'Request failed');
+        }
+        return data;
     }
 };
 
@@ -74,7 +90,7 @@ const Auth = {
         return true;
     },
     requireAdmin() {
-        if (!this.isLoggedIn() || !this.isAdmin()) { window.location.href = '/admin-login'; return false; }
+        if (!this.isLoggedIn() || !this.isAdmin()) { window.location.href = 'http://localhost:3001/admin-login'; return false; }
         return true;
     },
     logout() {

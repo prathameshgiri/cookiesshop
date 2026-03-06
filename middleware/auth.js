@@ -12,21 +12,33 @@ function getDB() {
   return JSON.parse(fs.readFileSync(dbPath, 'utf8'));
 }
 
-// Verify user by session token stored in memory
-const sessions = {};
+// Verify user by session token stored in db.json
+function saveDB(db) {
+  const dbPath = path.join(__dirname, '../data/db.json');
+  fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
+}
 
 function createSession(userId, role) {
+  const db = getDB();
+  if (!db.sessions) db.sessions = {};
+
   const token = `sess_${Date.now()}_${Math.random().toString(36).substring(2)}`;
-  sessions[token] = { userId, role, createdAt: Date.now() };
+  db.sessions[token] = { userId, role, createdAt: Date.now() };
+  saveDB(db);
   return token;
 }
 
 function getSession(token) {
-  return sessions[token] || null;
+  const db = getDB();
+  return (db.sessions && db.sessions[token]) || null;
 }
 
 function destroySession(token) {
-  delete sessions[token];
+  const db = getDB();
+  if (db.sessions && db.sessions[token]) {
+    delete db.sessions[token];
+    saveDB(db);
+  }
 }
 
 // Middleware: require any authenticated user

@@ -143,6 +143,39 @@
       "address": "s, s - 2345654321",
       "status": "Confirmed",
       "createdAt": "2026-03-04T14:31:56.040Z"
+    },
+    {
+      "id": "ord2209c31c",
+      "userId": "u1",
+      "userName": "Arpita Survase",
+      "userEmail": "arpita@user.com",
+      "items": [
+        {
+          "productId": "p2",
+          "name": "Classic Choco Chip Cookies",
+          "price": 199,
+          "image": "/images/cookies.png",
+          "quantity": 1
+        },
+        {
+          "productId": "p1",
+          "name": "Dark Chocolate Truffle",
+          "price": 299,
+          "image": "/images/chocolate.png",
+          "quantity": 2
+        },
+        {
+          "productId": "p3",
+          "name": "Premium Gift Combo Box",
+          "price": 599,
+          "image": "/images/combo.png",
+          "quantity": 1
+        }
+      ],
+      "total": 1396,
+      "address": "test, Aurad Shahajani - 413522",
+      "status": "Delivered",
+      "createdAt": "2026-03-06T16:02:25.611Z"
     }
   ],
   "messages": [
@@ -162,5 +195,12 @@
       "read": true,
       "createdAt": "2026-03-04T14:33:32.355Z"
     }
-  ]
+  ],
+  "sessions": {
+    "sess_1772812953575_qsfytctkr5": {
+      "userId": "a1",
+      "role": "admin",
+      "createdAt": 1772812953575
+    }
+  }
 }
